@@ -2,11 +2,34 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentQuestionSet, setCurrentQuestionSet] = useState(0);
+ // 不再需要 currentQuestionSet
+// const [currentQuestionSet, setCurrentQuestionSet] = useState(0);
+
+  // 从 data/quiz.json 加载题库，并随机抽 3 道
+const [quizData, setQuizData] = useState<any[]>([]);
+const [currentQuestions, setCurrentQuestions] = useState<any[]>([]);
+const [groupNumber, setGroupNumber] = useState(1);
+
+useEffect(() => {
+    fetch('/data/quiz.json')
+      .then(res => res.json())+     .then(data => {
+        setQuizData(data);
+        shuffleQuestions(data);
+      });
+  }, []);
+
+  function shuffleQuestions(data: any[]) {
+    const copy = [...data];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    setCurrentQuestions(copy.slice(0, 3));
+  }
 
   // 搜索处理
   const handleSearch = () => {
@@ -15,61 +38,13 @@ export default function Home() {
     }
   };
 
-  // 题库数据
-  const questionSets = [
-    {
-      id: 1,
-      questions: [
-        {
-          id: 1,
-          type: 'choice',
-          question: '如视VR技术主要应用于哪个领域？',
-          options: ['A. 房地产虚拟看房', 'B. 游戏娱乐', 'C. 在线教育', 'D. 社交媒体'],
-          correct: 0
-        },
-        {
-          id: 2,
-          type: 'judge',
-          question: '伽罗华采集系统支持实时数据处理',
-          correct: true
-        },
-        {
-          id: 3,
-          type: 'choice',
-          question: '庞加莱算法主要用于什么处理？',
-          options: ['A. 图像识别', 'B. 空间重建', 'C. 数据压缩', 'D. 网络传输'],
-          correct: 1
-        }
-      ]
-    },
-    {
-      id: 2,
-      questions: [
-        {
-          id: 4,
-          type: 'choice',
-          question: '轻量级设备采集的主要优势是什么？',
-          options: ['A. 成本低廉', 'B. 便携性强', 'C. 处理速度快', 'D. 以上都是'],
-          correct: 3
-        },
-        {
-          id: 5,
-          type: 'judge',
-          question: 'VR设备需要定期校准以保证精度',
-          correct: true
-        },
-        {
-          id: 6,
-          type: 'choice',
-          question: '数据采集频率通常设置为多少？',
-          options: ['A. 30fps', 'B. 60fps', 'C. 120fps', 'D. 根据需求调整'],
-          correct: 3
-        }
-      ]
-    }
-  ];
+  // 不再需要 questionSets
 
-  const currentQuestions = questionSets[currentQuestionSet]?.questions || [];
+  // 切换题组：再洗一次牌，并累加组数
+  const switchQuestionSet = () => {
+    shuffleQuestions(quizData);
+    setGroupNumber(n => n + 1);
+  };
 
   const switchQuestionSet = () => {
     setCurrentQuestionSet((prev) => (prev + 1) % questionSets.length);
@@ -475,8 +450,8 @@ export default function Home() {
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center space-x-3">
                 <div className="w-3 h-3 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full"></div>
-                <h3 className="text-2xl font-bold text-white">
-                  第 {currentQuestionSet + 1} 组题目
+                 <h3 className="text-2xl font-bold text-white">
+                  第 {groupNumber} 组题目
                 </h3>
               </div>
               <button
