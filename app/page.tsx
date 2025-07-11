@@ -137,7 +137,6 @@ export default function Page() {
       description: '高效的团队协作方法和工具'
     }
   ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
       {/* 顶部导航 */}
