@@ -46,9 +46,6 @@ useEffect(() => {
     setGroupNumber(n => n + 1);
   };
 
-  const switchQuestionSet = () => {
-    setCurrentQuestionSet((prev) => (prev + 1) % questionSets.length);
-  };
 
   // 手册和视频数据
   const manualSections = [
