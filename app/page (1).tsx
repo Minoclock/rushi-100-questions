@@ -20,13 +20,14 @@ export default function Page() {
   const [groupNumber, setGroupNumber] = useState<number>(1);
 
   useEffect(() => {
-    fetch('/data/quiz.json')
-      .then(res => res.json() as QuizItem[])
-      .then(data => {
-        setQuizData(data);
-        shuffleQuestions(data);
-      });
-  }, []);
+  fetch('/data/quiz.json')
+    .then(res => res.json())              // 先拿 any
+    .then((data: QuizItem[]) => {         // 再断言 QuizItem[]
+      setQuizData(data);
+      shuffleQuestions(data);
+    })
+    .catch(err => console.error(err));    // 可选：捕获错误
+}, []);
 
  // 显式声明参数类型
   function shuffleQuestions(data: QuizItem[]) {
