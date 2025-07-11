@@ -504,7 +504,7 @@ export default function Home() {
 
                   {question.type === 'choice' ? (
                     <div className="space-y-3 ml-12">
-                     {question.options?.map((option, optionIndex) => (
+                     {question.options?.map((opt, optionIndex) => (
                         <label
                           key={optionIndex}
                           className="flex items-center space-x-3 cursor-pointer hover:bg-white/10 p-3 rounded-xl transition-all duration-300 group"
@@ -515,7 +515,7 @@ export default function Home() {
                             className="text-indigo-500 focus:ring-indigo-500 bg-white/10 border-white/20"
                           />
                           <span className="text-white/80 group-hover:text-white transition-colors">
-                            {Option}
+                            {opt}
                           </span>
                         </label>
                       ))}
