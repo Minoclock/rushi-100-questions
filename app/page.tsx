@@ -515,7 +515,7 @@ export default function Home() {
                             className="text-indigo-500 focus:ring-indigo-500 bg-white/10 border-white/20"
                           />
                           <span className="text-white/80 group-hover:text-white transition-colors">
-                            {option}
+                            {Option}
                           </span>
                         </label>
                       ))}
