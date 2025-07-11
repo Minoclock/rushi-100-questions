@@ -472,90 +472,30 @@ export default function Page() {
               AI智能生成的随机题库，全面测试你的技术掌握程度
             </p>
           </div>
-
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
-            <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full"></div>
-                 <h3 className="text-2xl font-bold text-white">
-                  第 {groupNumber} 组题目
-                </h3>
-              </div>
-              <button
-                onClick={switchQuestionSet}
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl text-sm font-semibold whitespace-nowrap cursor-pointer transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                <i className="ri-refresh-line mr-2"></i>换一组题目
-              </button>
-            </div>
-
-            <div className="space-y-8">
-              {currentQuestions.map((question, index) => (
-                <div
-                  key={question.id}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300"
-                >
-                  <div className="flex items-start space-x-4 mb-6">
-                    <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                      {index + 1}
-                    </div>
-                    <h4 className="text-white font-semibold text-lg leading-relaxed flex-1">
-                      {question.question}
-                    </h4>
-                  </div>
-
-                  {question.type === 'choice' ? (
-                    <div className="space-y-3 ml-12">
-                      {question.options.map((option: string, index: number) => (
-                        <label
-                          key={optionIndex}
-                          className="flex items-center space-x-3 cursor-pointer hover:bg-white/10 p-3 rounded-xl transition-all duration-300 group"
-                        >
-                          <input
-                            type="radio"
-                            name={`question-${question.id}`}
-                            className="text-indigo-500 focus:ring-indigo-500 bg-white/10 border-white/20"
-                          />
-                          <span className="text-white/80 group-hover:text-white transition-colors">
-                            {option}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="flex space-x-6 ml-12">
-                      <label className="flex items-center space-x-3 cursor-pointer hover:bg-white/10 p-3 rounded-xl transition-all duration-300 group">
-                        <input
-                          type="radio"
-                          name={`question-${question.id}`}
-                          className="text-indigo-500 focus:ring-indigo-500 bg-white/10 border-white/20"
-                        />
-                        <span className="text-white/80 group-hover:text-white transition-colors">
-                          正确
-                        </span>
-                      </label>
-                      <label className="flex items-center space-x-3 cursor-pointer hover:bg-white/10 p-3 rounded-xl transition-all duration-300 group">
-                        <input
-                          type="radio"
-                          name={`question-${question.id}`}
-                          className="text-indigo-500 focus:ring-indigo-500 bg-white/10 border-white/20"
-                        />
-                        <span className="text-white/80 group-hover:text-white transition-colors">
-                          错误
-                        </span>
-                      </label>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-10 py-4 rounded-xl font-semibold text-lg whitespace-nowrap cursor-pointer transition-all duration-300 hover:scale-105 shadow-xl">
-                <i className="ri-check-line mr-2"></i>提交答案
-              </button>
-            </div>
-          </div>
+ <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
+     <div className="flex justify-between items-center mb-8">
+       <h3 className="text-2xl font-bold text-white">第 {groupNumber} 组题目</h3>
+       <button
+         onClick={switchQuestionSet}
+         className="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-3 rounded-xl text-white hover:scale-105"
+       >
+         换一组题目
+       </button>
+    </div>
+    <div className="space-y-8">
+       {currentQuestions.map((question, index) => (
+         <div key={question.id} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+           {/* … 题目渲染和选项渲染逻辑 … */}
+         </div>
+       ))}
+     </div>
+     <div className="mt-10 text-center">
+       <button className="bg-gradient-to-r from-indigo-500 to-purple-600 px-10 py-4 rounded-xl text-white hover:scale-105">
+         提交答案
+      </button>
+    </div>
+   </div>
+          
         </div>
       </div>
 
