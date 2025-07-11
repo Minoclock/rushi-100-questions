@@ -46,7 +46,7 @@ export default function Page() {
   };
 
   // 不再需要 questionSets
-/ 切题函数
+// 切题函数
   const switchQuestionSet = (): void => {
     shuffleQuestions(quizData);
     setGroupNumber(n => n + 1);
