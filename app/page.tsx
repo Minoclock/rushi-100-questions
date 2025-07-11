@@ -4,25 +4,32 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
-export default function Home() {
-  const [searchTerm, setSearchTerm] = useState('');
- // 不再需要 currentQuestionSet
-// const [currentQuestionSet, setCurrentQuestionSet] = useState(0);
+// 定义题目数据结构
+interface QuizItem {
+  id: number;
+  type: 'single' | 'multi' | 'tf';
+  question: string;
+  options?: string[];
+  answer: string[];
+}
 
-  // 从 data/quiz.json 加载题库，并随机抽 3 道
-const [quizData, setQuizData] = useState<any[]>([]);
-const [currentQuestions, setCurrentQuestions] = useState<any[]>([]);
-const [groupNumber, setGroupNumber] = useState(1);
+export default function Page() {
+  // 这两个数组里都是 QuizItem
+  const [quizData, setQuizData] = useState<QuizItem[]>([]);
+  const [currentQuestions, setCurrentQuestions] = useState<QuizItem[]>([]);
+  const [groupNumber, setGroupNumber] = useState<number>(1);
 
-useEffect(() => {
+  useEffect(() => {
     fetch('/data/quiz.json')
-      .then(res => res.json())     .then(data => {
+      .then(res => res.json() as QuizItem[])
+      .then(data => {
         setQuizData(data);
         shuffleQuestions(data);
       });
   }, []);
 
-  function shuffleQuestions(data: any[]) {
+ // 显式声明参数类型
+  function shuffleQuestions(data: QuizItem[]) {
     const copy = [...data];
     for (let i = copy.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -39,12 +46,35 @@ useEffect(() => {
   };
 
   // 不再需要 questionSets
-
-  // 切换题组：再洗一次牌，并累加组数
-  const switchQuestionSet = () => {
+/ 切题函数
+  const switchQuestionSet = (): void => {
     shuffleQuestions(quizData);
     setGroupNumber(n => n + 1);
   };
+
+  return (
+    <div>
+      <h3>第 {groupNumber} 组题目</h3>
+      <button onClick={switchQuestionSet}>换一组题目</button>
+
+      {currentQuestions.map((q: QuizItem, qi: number) => (
+        <div key={q.id}>
+          <p>{qi + 1}. {q.question}</p>
+          {/* 如果有选项，options 一定是 string[] */}
+          {q.options?.map((opt: string, oi: number) => (
+            <label key={oi}>
+              <input type={q.type === 'single' ? 'radio' : 'checkbox'}
+                     name={`q-${q.id}`}
+                     value={opt}
+              />
+              {opt}
+            </label>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
 
 
   // 手册和视频数据
