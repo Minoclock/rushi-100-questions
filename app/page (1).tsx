@@ -37,13 +37,6 @@ export default function Page() {
       [copy[i], copy[j]] = [copy[j], copy[i]];
     }
     setCurrentQuestions(copy.slice(0, 3));
-  }
-
-  // 搜索处理
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      console.log('搜索:', searchTerm);
-    }
   };
 
   // 不再需要 questionSets
