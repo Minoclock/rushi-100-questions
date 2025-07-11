@@ -16,7 +16,7 @@ const [groupNumber, setGroupNumber] = useState(1);
 
 useEffect(() => {
     fetch('/data/quiz.json')
-      .then(res => res.json())+     .then(data => {
+      .then(res => res.json())     .then(data => {
         setQuizData(data);
         shuffleQuestions(data);
       });
